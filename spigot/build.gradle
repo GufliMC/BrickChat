@@ -1,0 +1,36 @@
+plugins {
+    id 'net.minecrell.plugin-yml.bukkit' version '0.5.1'
+}
+
+repositories {
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    implementation project(':api')
+    implementation project(':spigot-api')
+    implementation project(':common')
+
+    compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT'
+
+    compileOnly 'com.guflimc.brick.placeholders:spigot-api:+'
+
+    // shade
+    implementation 'com.google.code.gson:gson:2.+'
+    implementation 'net.kyori:adventure-api:4.+'
+    implementation 'net.kyori:adventure-text-minimessage:4.+'
+    implementation "net.kyori:adventure-text-serializer-legacy:4.+"
+    implementation "net.kyori:adventure-platform-bukkit:4.+"
+}
+
+bukkit {
+    name = rootProject.name
+    main = 'com.guflimc.brick.chat.spigot.SpigotBrickChat'
+    description = 'Simple and lightweight chat plugin for mc 1.18+'
+    author = 'GufliMC'
+    website = 'https://github.com/GufliMC/BrickChat'
+    softDepend = ["BrickPlaceholders"]
+}
+
+// I want it nice like that
+generateBukkitPluginDescription.group = "minecraft"

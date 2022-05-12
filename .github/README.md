@@ -1,13 +1,12 @@
 # BrickChat
 
-An extension for [Minestom](https://github.com/Minestom/Minestom) to manage chat channels.
+A simple Minecraft plugin/extension for creating chat channels
 
 ## Install
 
-Get the [release](https://github.com/MinestomBrick/BrickChat/releases)
-and place it in the extension folder of your minestom server.
+Get the [release](https://github.com/GufliMC/BrickChat/releases) and place it in your server.
 
-## Config
+### Config
 
 You can change the settings in the `config.json`.
 
@@ -36,26 +35,39 @@ Available **protect** types are:
 * TALK: You can read, but need permission to talk
 * READ_AND_TALK: You need permission to read and talk
 
-## API
+### API
 
+#### Gradle
 ```
 repositories {
     maven { url "https://repo.jorisg.com/snapshots" }
 }
 
 dependencies {
-    implementation 'com.gufli.brickchat:api:1.0-SNAPSHOT'
+    // minestom
+    compileOnly 'com.guflimc.brick.chat:minestom-api:+'
+    
+    // spigot
+    compileOnly 'com.guflimc.brick.chat:spigot-api:+'
 }
 ```
 
+#### Javadocs
+
+Check the javadocs for all platforms [here](https://guflimc.github.io/BrickChat/).
+
+#### Examples
+
 ```java
-ChatAPI.get().registerChatChannel(new SimpleChatChannel("trade", "$", "[TRADE] {playername} > {chatmessage}"));
+SpigotChatAPI.get().registerChatChannel(new SimpleChatChannel("trade", "$", "[TRADE] {playername} > {chatmessage}"));
 
-ChatChannel channel = ChatAPI.get().channelByName("trade");
-ChatAPI.get().send(channel, "hello fellow traders!");
-
-MinecraftServer.getGlobalEventHandler().addListener(PlayerChannelChatEvent.class,
-        e -> System.out.println(e.chatChannel().name() + ": " + e.player() + " > " + e.message()));
+SpigotChatChannel channel = ChatAPI.get().channelByName("trade");
+SpigotChatAPI.get().send(channel, "hello fellow traders!");
 ```
 
-Check the [javadocs](https://minestombrick.github.io/BrickChat/)
+```
+@EventHandler
+public void onChat(PlayerChannelChatEvent e) {
+    System.out.println(e.chatChannel().name() + ": " + e.player() + " > " + e.message());
+}
+```

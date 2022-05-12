@@ -1,0 +1,23 @@
+plugins {
+    id 'com.guflimc.minestom.extensionsetup' version '+'
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation project(':api')
+    implementation project(':common')
+    implementation project(':minestom-api')
+
+    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
+    compileOnly 'com.guflimc.brick.placeholders:minestom-api:+'
+
+    library 'com.google.code.gson:gson:2.+'
+}
+
+minestomExtension {
+    entrypoint = "com.guflimc.brick.chat.minestom.MinestomBrickChat"
+    dependencies = ["BrickPlaceholders"]
+}
