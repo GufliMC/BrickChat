@@ -1,0 +1,9 @@
+com.guflimc.brick.chat.api
+com.guflimc.brick.chat.api.channel
+com.guflimc.brick.chat.api.event
+com.guflimc.brick.chat.minestom.api
+com.guflimc.brick.chat.minestom.api.channel
+com.guflimc.brick.chat.minestom.api.event
+com.guflimc.brick.chat.spigot.api
+com.guflimc.brick.chat.spigot.api.channel
+com.guflimc.brick.chat.spigot.api.event
