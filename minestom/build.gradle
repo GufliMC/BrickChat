@@ -7,14 +7,21 @@ repositories {
 }
 
 dependencies {
-    implementation project(':api')
-    implementation project(':common')
-    implementation project(':minestom-api')
-
+    // provided by platform
     compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
     compileOnly 'com.guflimc.brick.placeholders:minestom-api:+'
 
-    library 'com.google.code.gson:gson:2.+'
+    // external dependency
+    library 'net.kyori:adventure-text-minimessage:4.+'
+
+    // shadow
+    implementation (project(':common')) {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'net.kyori' // provided by platform
+    }
+    implementation (project(':minestom-api')) {
+        exclude group: 'net.kyori' // provided by platform
+    }
 }
 
 minestomExtension {

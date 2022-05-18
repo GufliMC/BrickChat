@@ -3,9 +3,9 @@ package com.guflimc.brick.chat.common;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.guflimc.brick.chat.api.ChatManager;
-import com.guflimc.brick.chat.api.channel.AbstractChatChannel;
 import com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +39,7 @@ public abstract class ConfigParser<T> {
                     activator = channel.get("activator").getAsString();
                 }
 
-                AbstractPermissionChatChannel<T> scc = createChannel(name, activator, Component.text(format));
+                AbstractPermissionChatChannel<T> scc = createChannel(name, activator, MiniMessage.miniMessage().deserialize(format));
                 chatManager.registerChatChannel(scc);
 
                 if ( !channel.has("protect") ) {
