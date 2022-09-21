@@ -72,7 +72,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractChatChannel</a>&lt;T&gt;
-<div class="inheritance"><a href="../../../api/channel/AbstractPermissionChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel</a>&lt;org.bukkit.entity.Player&gt;
+<div class="inheritance"><a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel</a>&lt;org.bukkit.entity.Player&gt;
 <div class="inheritance">com.guflimc.brick.chat.spigot.api.channel.SpigotChatChannel</div>
 </div>
 </div>
@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SpigotChatChannel</span>
-<span class="extends-implements">extends <a href="../../../api/channel/AbstractPermissionChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractPermissionChatChannel</a>&lt;org.bukkit.entity.Player&gt;</span></div>
+<span class="extends-implements">extends <a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a>&lt;org.bukkit.entity.Player&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -93,8 +93,8 @@ loadScripts(document, 'script');</script>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel">Nested classes/interfaces inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractPermissionChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractPermissionChatChannel</a></h2>
-<code><a href="../../../api/channel/AbstractPermissionChatChannel.RestrictedAction.html" title="enum class in com.guflimc.brick.chat.api.channel">AbstractPermissionChatChannel.RestrictedAction</a></code></div>
+<h2 id="nested-classes-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Nested classes/interfaces inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h2>
+<code><a href="../../../api/channel/AbstractRestrictedChatChannel.RestrictedAction.html" title="enum class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel.RestrictedAction</a></code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
@@ -102,8 +102,8 @@ loadScripts(document, 'script');</script>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel">Fields inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractPermissionChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractPermissionChatChannel</a></h3>
-<code><a href="../../../api/channel/AbstractPermissionChatChannel.html#action">action</a>, <a href="../../../api/channel/AbstractPermissionChatChannel.html#permission">permission</a></code></div>
+<h3 id="fields-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Fields inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h3>
+<code><a href="../../../api/channel/AbstractRestrictedChatChannel.html#action">action</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractChatChannel">Fields inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractChatChannel</a></h3>
 <code><a href="../../../api/channel/AbstractChatChannel.html#activator">activator</a>, <a href="../../../api/channel/AbstractChatChannel.html#format">format</a>, <a href="../../../api/channel/AbstractChatChannel.html#name">name</a></code></div>
@@ -145,8 +145,8 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel">Methods inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractPermissionChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractPermissionChatChannel</a></h3>
-<code><a href="../../../api/channel/AbstractPermissionChatChannel.html#protect(com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel.RestrictedAction,java.lang.String)">protect</a></code></div>
+<h3 id="methods-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Methods inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h3>
+<code><a href="../../../api/channel/AbstractRestrictedChatChannel.html#restrict(com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel.RestrictedAction)">restrict</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractChatChannel">Methods inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractChatChannel</a></h3>
 <code><a href="../../../api/channel/AbstractChatChannel.html#activator()">activator</a>, <a href="../../../api/channel/AbstractChatChannel.html#format()">format</a>, <a href="../../../api/channel/AbstractChatChannel.html#name()">name</a></code></div>
