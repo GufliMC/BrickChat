@@ -10,8 +10,8 @@ public interface ChatChannel<T> {
 
     String activator();
 
-    boolean canRead(T entity);
+    boolean canRead(T player);
 
-    boolean canTalk(T entity);
+    boolean canTalk(T player);
 
 }

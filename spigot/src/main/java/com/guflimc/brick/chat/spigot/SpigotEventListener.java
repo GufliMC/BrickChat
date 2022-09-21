@@ -21,6 +21,6 @@ public class SpigotEventListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        chatManager.quit(event.getPlayer());
+        chatManager.unsetDefaultChannel(event.getPlayer());
     }
 }

@@ -28,5 +28,12 @@ bukkit {
     softDepend = ["BrickPlaceholders"]
 }
 
+shadowJar.doLast {
+    copy {
+        from "build/libs/" + archiveFileName.get()
+        into 'D:\\Documents\\testservers\\1.19 - cob\\plugins'
+    }
+}
+
 // I want it nice like that
 generateBukkitPluginDescription.group = "minecraft"

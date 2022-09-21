@@ -4,6 +4,8 @@ import com.guflimc.brick.chat.spigot.api.SpigotChatAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,8 +26,9 @@ public class SpigotBrickChat extends JavaPlugin {
 
         // load channels
         SpigotConfigParser parser = new SpigotConfigParser(chatManager);
+        saveResource("config.json", false);
         try (
-                InputStream is = getResource("config.json");
+                InputStream is = new FileInputStream(new File(getDataFolder(), "config.json"))
         ) {
             parser.parse(is);
         } catch (IOException e) {

@@ -7,27 +7,26 @@ import com.guflimc.brick.chat.spigot.api.event.SpigotPlayerChannelChatEvent;
 import com.guflimc.brick.placeholders.spigot.api.SpigotPlaceholderAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlayerChannelChatEvent> implements SpigotChatManager {
 
-    private final Map<Player, String> defaultChannels = new HashMap<>();
-
+    private final Map<Player, String> defaultChannels = new ConcurrentHashMap<>();
     private final BukkitAudiences adventure;
+
     public SpigotBrickChatManager(BukkitAudiences adventure) {
         this.adventure = adventure;
-    }
-
-
-    void quit(Player player) {
-        defaultChannels.remove(player);
     }
 
     void execute(AsyncPlayerChatEvent event) {
@@ -58,6 +57,21 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     }
 
     @Override
+    public Optional<ChatChannel<Player>> defaultChannel(Player entity) {
+        return Optional.ofNullable(defaultChannels.get(entity)).flatMap(this::channelByName);
+    }
+
+    @Override
+    public void setDefaultChannel(Player entity, ChatChannel<Player> channel) {
+        defaultChannels.put(entity, channel.name());
+    }
+
+    @Override
+    public void unsetDefaultChannel(Player entity) {
+        defaultChannels.remove(entity);
+    }
+
+    @Override
     public void send(ChatChannel<Player> channel, Component text) {
         Bukkit.getOnlinePlayers().stream()
                 .filter(channel::canRead)
@@ -71,53 +85,27 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     }
 
     @Override
-    protected Component format(Component format, Player player, String message) {
+    protected Component format(Component format, Player player, String msg) {
+        Component message;
+        if (player.hasPermission("brickchat.parse")) {
+            message = MiniMessage.miniMessage().deserialize(msg); //LegacyComponentSerializer.legacySection().deserialize(msg);
+        } else {
+            message = Component.text(msg);
+        }
+
         Component result = super.format(format, player, message);
 
-        result = format
+        result = result
                 .replaceText(builder -> {
                     builder.match(Pattern.quote("{playername}"))
                             .replacement(player.getName());
                 });
 
-        if ( Bukkit.getServer().getPluginManager().isPluginEnabled("BrickPlaceholders") ) {
+        if (Bukkit.getServer().getPluginManager().isPluginEnabled("BrickPlaceholders")) {
             result = SpigotPlaceholderAPI.get().replace(player, result);
         }
 
         return result;
-    }
-
-    @Override
-    protected SpigotPlayerChannelChatEvent dispatch(Player player, String message) {
-        message = message.trim();
-
-        List<ChatChannel<Player>> channels = channels().stream()
-                .filter(c -> c.canTalk(player))
-                .sorted(Comparator.comparingInt(ch -> ch.activator() == null ? 0 : -ch.activator().length()))
-                .toList();
-
-        // initialize default channel
-        ChatChannel<Player> channel = null;
-        if ( defaultChannels.containsKey(player) ) {
-            String name = defaultChannels.get(player);
-            channel = channelByName(name);
-        }
-
-        // unset default chat channel by just typing the prefix
-        if (channel != null && channel.activator() != null && channel.activator().equals(message)) {
-            defaultChannels.remove(player);
-            return null;
-        }
-
-        // set default chat channel by just typing the prefix
-        for (ChatChannel<Player> ch : channels) {
-            if (ch.activator() != null && !ch.activator().equals("") && ch.activator().equals(message)) {
-                defaultChannels.put(player, ch.name());
-                return null;
-            }
-        }
-
-        return super.dispatch(player, message, channel);
     }
 
     protected SpigotPlayerChannelChatEvent dispatch(ChatChannel<Player> channel, Player player, String message) {

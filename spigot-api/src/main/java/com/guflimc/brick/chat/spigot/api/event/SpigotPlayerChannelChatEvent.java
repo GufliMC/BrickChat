@@ -17,6 +17,7 @@ public class SpigotPlayerChannelChatEvent extends Event implements PlayerChannel
     private final SimplePlayerChannelChatEvent<Player> wrapped;
 
     public SpigotPlayerChannelChatEvent(Player entity, ChatChannel<Player> chatChannel, String message, Set<Player> recipients, Component format) {
+        super(true);
         this.wrapped = new SimplePlayerChannelChatEvent<>(entity, chatChannel, message, recipients, format);
     }
 

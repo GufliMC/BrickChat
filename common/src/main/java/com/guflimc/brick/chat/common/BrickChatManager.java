@@ -6,6 +6,7 @@ import com.guflimc.brick.chat.api.event.PlayerChannelChatEvent;
 import net.kyori.adventure.text.Component;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ public abstract class BrickChatManager<T, U extends PlayerChannelChatEvent<T>> i
 
     @Override
     public void registerChatChannel(ChatChannel<T> channel) {
-        if (channelByName(channel.name()) != null) {
+        if (channelByName(channel.name()).isPresent()) {
             throw new IllegalArgumentException("A channel with that name already exists.");
         }
         chatChannels.add(channel);
@@ -27,9 +28,9 @@ public abstract class BrickChatManager<T, U extends PlayerChannelChatEvent<T>> i
     }
 
     @Override
-    public ChatChannel<T> channelByName(String name) {
+    public Optional<ChatChannel<T>> channelByName(String name) {
         return chatChannels.stream().filter(c -> c.name().equals(name))
-                .findFirst().orElse(null);
+                .findFirst();
     }
 
     @Override
@@ -52,15 +53,43 @@ public abstract class BrickChatManager<T, U extends PlayerChannelChatEvent<T>> i
     protected abstract void send(Collection<T> recipients, T player, Component format, String message);
 
     protected Component format(Component format, T player, String message) {
+        return format(format, player, Component.text(message));
+    }
+
+    protected Component format(Component format, T player, Component message) {
         return format
                 .replaceText(builder -> {
                     builder.match(Pattern.quote("{chatmessage}"))
-                            .replacement(Component.text(message));
+                            .replacement(message);
                 });
     }
 
     protected U dispatch(T entity, String message) {
-        return dispatch(entity, message, null);
+        message = message.trim();
+
+        List<ChatChannel<T>> channels = channels().stream()
+                .filter(c -> c.canTalk(entity))
+                .sorted(Comparator.comparingInt(ch -> ch.activator() == null ? 0 : -ch.activator().length()))
+                .toList();
+
+        // initialize default channel
+        ChatChannel<T> channel = defaultChannel(entity).orElse(null);
+
+        // unset default chat channel by just typing the prefix
+        if (channel != null && channel.activator() != null && channel.activator().equals(message)) {
+            unsetDefaultChannel(entity);
+            return null;
+        }
+
+        // set default chat channel by just typing the prefix
+        for (ChatChannel<T> ch : channels) {
+            if (ch.activator() != null && !ch.activator().equals("") && ch.activator().equals(message)) {
+                setDefaultChannel(entity, ch);
+                return null;
+            }
+        }
+
+        return dispatch(entity, message, channel);
     }
 
     protected U dispatch(T entity, String message, ChatChannel<T> defaultChannel) {

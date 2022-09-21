@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class SimplePlayerChannelChatEvent<T>  implements PlayerChannelChatEvent<T> {
 
-    private final T entity;
+    private final T player;
 
     private final ChatChannel<T> chatChannel;
     private final String message;
@@ -17,8 +17,8 @@ public class SimplePlayerChannelChatEvent<T>  implements PlayerChannelChatEvent<
 
     private boolean cancelled = false;
 
-    public SimplePlayerChannelChatEvent(T entity, ChatChannel<T> chatChannel, String message, Set<T> recipients, Component format) {
-        this.entity = entity;
+    public SimplePlayerChannelChatEvent(T player, ChatChannel<T> chatChannel, String message, Set<T> recipients, Component format) {
+        this.player = player;
         this.chatChannel = chatChannel;
         this.message = message;
         this.recipients = recipients;
@@ -46,7 +46,7 @@ public class SimplePlayerChannelChatEvent<T>  implements PlayerChannelChatEvent<
     }
 
     public T player() {
-        return entity;
+        return player;
     }
 
     public boolean isCancelled() {
