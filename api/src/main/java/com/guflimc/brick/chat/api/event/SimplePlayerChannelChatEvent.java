@@ -45,7 +45,7 @@ public class SimplePlayerChannelChatEvent<T>  implements PlayerChannelChatEvent<
         this.format = format;
     }
 
-    public T entity() {
+    public T player() {
         return entity;
     }
 

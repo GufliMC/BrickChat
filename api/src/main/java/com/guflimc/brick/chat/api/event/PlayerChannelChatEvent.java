@@ -17,7 +17,7 @@ public interface PlayerChannelChatEvent<T> {
 
     void setFormat(Component format);
 
-    T entity();
+    T player();
 
     boolean isCancelled();
 

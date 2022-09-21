@@ -31,11 +31,11 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     }
 
     void execute(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
+        event.setCancelled(true);
 
+        Player player = event.getPlayer();
         SpigotPlayerChannelChatEvent channelChatEvent = dispatch(player, event.getMessage());
         if (channelChatEvent == null) {
-            event.setCancelled(true);
             return;
         }
 
@@ -45,8 +45,9 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
         event.getRecipients().addAll(channelChatEvent.recipients());
 
         Component format = format(channelChatEvent.format(), player, event.getMessage());
-        String strFormat = LegacyComponentSerializer.legacySection().serialize(format);
-        event.setFormat(strFormat);
+        event.getRecipients().stream().map(adventure::player).forEach(a -> a.sendMessage(format));
+//        String strFormat = LegacyComponentSerializer.legacySection().serialize(format);
+//        event.setFormat(strFormat);
     }
 
     @Override

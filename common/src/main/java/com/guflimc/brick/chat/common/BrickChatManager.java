@@ -40,7 +40,7 @@ public abstract class BrickChatManager<T, U extends PlayerChannelChatEvent<T>> i
     public void execute(T entity, String message) {
         U event = dispatch(entity, message);
         if (event == null) return;
-        send(event.recipients(), event.entity(), event.format(), event.message());
+        send(event.recipients(), event.player(), event.format(), event.message());
     }
 
     @Override

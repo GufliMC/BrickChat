@@ -40,8 +40,8 @@ public class SpigotPlayerChannelChatEvent extends Event implements PlayerChannel
         this.wrapped.setFormat(format);
     }
 
-    public Player entity() {
-        return wrapped.entity();
+    public Player player() {
+        return wrapped.player();
     }
 
     public boolean isCancelled() {

@@ -1,10 +1,10 @@
 package com.guflimc.brick.chat.minestom.api.channel;
 
-import com.guflimc.brick.chat.api.channel.AbstractPermissionChatChannel;
+import com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 
-public class MinestomChatChannel extends AbstractPermissionChatChannel<Player> {
+public class MinestomChatChannel extends AbstractRestrictedChatChannel<Player> {
 
     public MinestomChatChannel(String name, String activator, Component format) {
         super(name, activator, format);
@@ -13,7 +13,7 @@ public class MinestomChatChannel extends AbstractPermissionChatChannel<Player> {
     @Override
     public boolean canRead(Player player) {
         if ( action == RestrictedAction.READ_AND_TALK ) {
-            return player.hasPermission(permission) || player.getPermissionLevel() == 4;
+            return player.hasPermission("brickchat.channel." + name) || player.getPermissionLevel() == 4;
         }
         return true;
     }
@@ -21,7 +21,7 @@ public class MinestomChatChannel extends AbstractPermissionChatChannel<Player> {
     @Override
     public boolean canTalk(Player player) {
         if ( action == RestrictedAction.TALK ) {
-            return player.hasPermission(permission) || player.getPermissionLevel() == 4;
+            return player.hasPermission("brickchat.channel." + name) || player.getPermissionLevel() == 4;
         }
         return canRead(player);
     }
