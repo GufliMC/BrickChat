@@ -26,6 +26,7 @@ bukkit {
     author = 'GufliMC'
     website = 'https://github.com/GufliMC/BrickChat'
     softDepend = ["BrickPlaceholders"]
+    apiVersion = '1.18'
 }
 
 shadowJar.doLast {
