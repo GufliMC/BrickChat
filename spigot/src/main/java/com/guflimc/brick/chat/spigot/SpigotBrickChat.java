@@ -13,8 +13,6 @@ public class SpigotBrickChat extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("Enabling " + nameAndVersion() + ".");
-
         BukkitAudiences adventure = BukkitAudiences.create(this);
 
         // register chat manager
