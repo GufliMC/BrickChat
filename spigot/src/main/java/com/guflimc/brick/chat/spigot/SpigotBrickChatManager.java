@@ -8,6 +8,7 @@ import com.guflimc.brick.placeholders.spigot.api.SpigotPlaceholderAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -88,7 +89,11 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     protected Component format(Component format, Player player, String msg) {
         Component message;
         if (player.hasPermission("brickchat.parse")) {
-            message = MiniMessage.miniMessage().deserialize(msg); //LegacyComponentSerializer.legacySection().deserialize(msg);
+            try {
+                message = MiniMessage.miniMessage().deserialize(msg); //LegacyComponentSerializer.legacySection().deserialize(msg);
+            } catch (Exception ex) {
+                message = LegacyComponentSerializer.legacySection().deserialize(msg);
+            }
         } else {
             message = Component.text(msg);
         }
