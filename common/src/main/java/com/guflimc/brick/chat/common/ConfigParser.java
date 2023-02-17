@@ -3,7 +3,7 @@ package com.guflimc.brick.chat.common;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.guflimc.brick.chat.api.ChatManager;
-import com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel;
+import com.guflimc.brick.chat.api.channel.AbstractChatChannel;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -19,7 +19,7 @@ public abstract class ConfigParser<T> {
         this.chatManager = chatManager;
     }
 
-    protected abstract AbstractRestrictedChatChannel<T> createChannel(String name, String activator, Component format);
+    protected abstract AbstractChatChannel<T> createChannel(String name, String activator, Component format, boolean restricted);
 
     public void parse(InputStream resource) {
         try (
@@ -39,14 +39,10 @@ public abstract class ConfigParser<T> {
                     activator = channel.get("activator").getAsString();
                 }
 
-                AbstractRestrictedChatChannel<T> scc = createChannel(name, activator, MiniMessage.miniMessage().deserialize(format));
-                chatManager.registerChatChannel(scc);
+                boolean restricted = channel.has("restricted") && channel.get("restricted").getAsBoolean();
 
-                if ( channel.has("restrict")) {
-                    AbstractRestrictedChatChannel.RestrictedAction action = AbstractRestrictedChatChannel.RestrictedAction
-                            .valueOf(channel.get("restrict").getAsString().toUpperCase().replace("-", "_"));
-                    scc.restrict(action);
-                }
+                AbstractChatChannel<T> scc = createChannel(name, activator, MiniMessage.miniMessage().deserialize(format), restricted);
+                chatManager.registerChatChannel(scc);
             }
         } catch (IOException e) {
             e.printStackTrace();

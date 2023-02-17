@@ -1,29 +1,29 @@
 package com.guflimc.brick.chat.spigot.api.channel;
 
-import com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel;
+import com.guflimc.brick.chat.api.channel.AbstractChatChannel;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
-public class SpigotChatChannel extends AbstractRestrictedChatChannel<Player> {
+public class SpigotChatChannel extends AbstractChatChannel<Player> {
 
-    public SpigotChatChannel(String name, String activator, Component format) {
-        super(name, activator, format);
+    public SpigotChatChannel(String name, String activator, Component format, boolean restricted) {
+        super(name, activator, format, restricted);
     }
 
     @Override
     public boolean canRead(Player player) {
-        if ( action == RestrictedAction.READ_AND_TALK ) {
-            return player.hasPermission("brickchat.channel." + name) || player.isOp();
+        if (restricted) {
+            return player.hasPermission("brickchat.channel." + name + ".read") || canTalk(player);
         }
-        return true;
+        return canTalk(player);
     }
 
     @Override
     public boolean canTalk(Player player) {
-        if ( action == RestrictedAction.TALK ) {
-            return player.hasPermission("brickchat.channel." + name) || player.isOp();
+        if (restricted) {
+            return player.hasPermission("brickchat.channel." + name + ".talk") || player.isOp();
         }
-        return canRead(player);
+        return true;
     }
 
 }

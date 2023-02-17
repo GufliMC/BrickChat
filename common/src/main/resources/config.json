@@ -1,12 +1,12 @@
 {
   "channels": {
     "default": {
-      "format": "{playername} > {chatmessage}"
+      "format": "<white>{playername}<white>: <gray>{chatmessage}"
     },
     "admin": {
-      "format": "[ADMINCHAT] {playername} > {chatmessage}",
+      "format": "<red>[ADMINCHAT] <white>{playername}<white>: {chatmessage}",
       "activator": "!",
-      "restrict": "READ_AND_TALK"
+      "restricted": true
     }
   }
 }

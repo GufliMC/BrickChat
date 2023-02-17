@@ -7,11 +7,13 @@ public abstract class AbstractChatChannel<T> implements ChatChannel<T> {
     protected final String name;
     protected final String activator;
     protected final Component format;
+    protected final boolean restricted;
 
-    public AbstractChatChannel(String name, String activator, Component format) {
+    public AbstractChatChannel(String name, String activator, Component format, boolean restricted) {
         this.name = name;
         this.activator = activator;
         this.format = format;
+        this.restricted = restricted;
     }
 
     @Override
