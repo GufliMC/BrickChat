@@ -43,7 +43,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -71,10 +71,8 @@ loadScripts(document, 'script');</script>
 <h1 title="Class SpigotChatChannel" class="title">Class SpigotChatChannel</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractChatChannel</a>&lt;T&gt;
-<div class="inheritance"><a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel</a>&lt;org.bukkit.entity.Player&gt;
+<div class="inheritance"><a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">com.guflimc.brick.chat.api.channel.AbstractChatChannel</a>&lt;org.bukkit.entity.Player&gt;
 <div class="inheritance">com.guflimc.brick.chat.spigot.api.channel.SpigotChatChannel</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -84,29 +82,17 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SpigotChatChannel</span>
-<span class="extends-implements">extends <a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a>&lt;org.bukkit.entity.Player&gt;</span></div>
+<span class="extends-implements">extends <a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractChatChannel</a>&lt;org.bukkit.entity.Player&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<li>
-<section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Nested classes/interfaces inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h2>
-<code><a href="../../../api/channel/AbstractRestrictedChatChannel.RestrictedAction.html" title="enum class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel.RestrictedAction</a></code></div>
-</section>
-</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Fields inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h3>
-<code><a href="../../../api/channel/AbstractRestrictedChatChannel.html#action">action</a></code></div>
-<div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractChatChannel">Fields inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractChatChannel</a></h3>
-<code><a href="../../../api/channel/AbstractChatChannel.html#activator">activator</a>, <a href="../../../api/channel/AbstractChatChannel.html#format">format</a>, <a href="../../../api/channel/AbstractChatChannel.html#name">name</a></code></div>
+<code><a href="../../../api/channel/AbstractChatChannel.html#activator">activator</a>, <a href="../../../api/channel/AbstractChatChannel.html#format">format</a>, <a href="../../../api/channel/AbstractChatChannel.html#name">name</a>, <a href="../../../api/channel/AbstractChatChannel.html#restricted">restricted</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -117,9 +103,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,net.kyori.adventure.text.Component)" class="member-name-link">SpigotChatChannel</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,net.kyori.adventure.text.Component,boolean)" class="member-name-link">SpigotChatChannel</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;activator,
- net.kyori.adventure.text.Component&nbsp;format)</code></div>
+ net.kyori.adventure.text.Component&nbsp;format,
+ boolean&nbsp;restricted)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -145,9 +132,6 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel">Methods inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractRestrictedChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractRestrictedChatChannel</a></h3>
-<code><a href="../../../api/channel/AbstractRestrictedChatChannel.html#restrict(com.guflimc.brick.chat.api.channel.AbstractRestrictedChatChannel.RestrictedAction)">restrict</a></code></div>
-<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.guflimc.brick.chat.api.channel.AbstractChatChannel">Methods inherited from class&nbsp;com.guflimc.brick.chat.api.channel.<a href="../../../api/channel/AbstractChatChannel.html" title="class in com.guflimc.brick.chat.api.channel">AbstractChatChannel</a></h3>
 <code><a href="../../../api/channel/AbstractChatChannel.html#activator()">activator</a>, <a href="../../../api/channel/AbstractChatChannel.html#format()">format</a>, <a href="../../../api/channel/AbstractChatChannel.html#name()">name</a></code></div>
 <div class="inherited-list">
@@ -165,11 +149,12 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,net.kyori.adventure.text.Component)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,net.kyori.adventure.text.Component,boolean)">
 <h3>SpigotChatChannel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SpigotChatChannel</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;activator,
- net.kyori.adventure.text.Component&nbsp;format)</span></div>
+ net.kyori.adventure.text.Component&nbsp;format,
+ boolean&nbsp;restricted)</span></div>
 </section>
 </li>
 </ul>
