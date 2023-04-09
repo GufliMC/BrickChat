@@ -4,6 +4,7 @@ import com.guflimc.brick.chat.api.channel.ChatChannel;
 import com.guflimc.brick.chat.common.BrickChatManager;
 import com.guflimc.brick.chat.spigot.api.SpigotChatManager;
 import com.guflimc.brick.chat.spigot.api.event.SpigotPlayerChannelChatEvent;
+import com.guflimc.brick.placeholders.api.resolver.PlaceholderResolveContext;
 import com.guflimc.brick.placeholders.spigot.api.SpigotPlaceholderAPI;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
@@ -36,7 +37,7 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
         Player player = event.getPlayer();
         SpigotPlayerChannelChatEvent channelChatEvent = dispatch(player, event.getMessage());
         if (channelChatEvent == null) {
-            return;
+            return; // operation was sent, not actual chat
         }
 
         // update spigot event
@@ -44,8 +45,9 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
         event.getRecipients().clear();
         event.getRecipients().addAll(channelChatEvent.recipients());
 
-        Component format = format(channelChatEvent.format(), player, event.getMessage());
-        event.getRecipients().stream().map(adventure::player).forEach(a -> a.sendMessage(format));
+        // send messages
+        send(event.getRecipients(), player, channelChatEvent.format(), event.getMessage());
+
 //        String strFormat = LegacyComponentSerializer.legacySection().serialize(format);
 //        event.setFormat(strFormat);
     }
@@ -82,7 +84,16 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     @Override
     protected void send(Collection<Player> recipients, Player player, Component format, String message) {
         Component result = format(format, player, message);
-        recipients.forEach(p -> adventure.player(p).sendMessage(result));
+
+        if (Bukkit.getServer().getPluginManager().isPluginEnabled("BrickPlaceholders")) {
+            recipients.forEach(r -> {
+                Component f = SpigotPlaceholderAPI.get().replace(result, PlaceholderResolveContext.of(player, r));
+                adventure.player(r).sendMessage(f);
+            });
+            return;
+        }
+
+        recipients.forEach(r -> adventure.player(r).sendMessage(result));
     }
 
     @Override
@@ -90,7 +101,7 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
         Component message;
         if (player.hasPermission("brickchat.parse")) {
             try {
-                message = MiniMessage.miniMessage().deserialize(msg); //LegacyComponentSerializer.legacySection().deserialize(msg);
+                message = MiniMessage.miniMessage().deserialize(msg);
             } catch (Exception ex) {
                 message = LegacyComponentSerializer.legacySection().deserialize(msg);
             }
@@ -98,19 +109,7 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
             message = Component.text(msg);
         }
 
-        Component result = super.format(format, player, message);
-
-        result = result
-                .replaceText(builder -> {
-                    builder.match(Pattern.quote("{playername}"))
-                            .replacement(player.getName());
-                });
-
-        if (Bukkit.getServer().getPluginManager().isPluginEnabled("BrickPlaceholders")) {
-            result = SpigotPlaceholderAPI.get().replace(player, result);
-        }
-
-        return result;
+        return super.format(format, player, message);
     }
 
     protected SpigotPlayerChannelChatEvent dispatch(ChatChannel<Player> channel, Player player, String message) {

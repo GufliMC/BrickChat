@@ -59,7 +59,7 @@ public abstract class BrickChatManager<T, U extends PlayerChannelChatEvent<T>> i
     protected Component format(Component format, T player, Component message) {
         return format
                 .replaceText(builder -> {
-                    builder.match(Pattern.quote("{chatmessage}"))
+                    builder.match(Pattern.quote("%chatmessage%"))
                             .replacement(message);
                 });
     }

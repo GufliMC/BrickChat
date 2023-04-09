@@ -4,6 +4,7 @@ import com.guflimc.brick.chat.api.channel.ChatChannel;
 import com.guflimc.brick.chat.common.BrickChatManager;
 import com.guflimc.brick.chat.minestom.api.MinestomChatManager;
 import com.guflimc.brick.chat.minestom.api.event.MinestomPlayerChannelChatEvent;
+import com.guflimc.brick.placeholders.api.resolver.PlaceholderResolveContext;
 import com.guflimc.brick.placeholders.minestom.api.MinestomPlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -75,6 +76,14 @@ public class MinestomBrickChatManager extends BrickChatManager<Player, MinestomP
     @Override
     protected void send(Collection<Player> recipients, Player player, Component format, String message) {
         Component result = format(format, player, message);
+
+        if (MinecraftServer.getExtensionManager().hasExtension("brickplaceholders")) {
+            recipients.forEach(r -> {
+                Component f = MinestomPlaceholderAPI.get().replace(result, PlaceholderResolveContext.of(player, r));
+                r.sendMessage(f);
+            });
+        }
+
         recipients.forEach(p -> p.sendMessage(result));
     }
 
@@ -82,24 +91,12 @@ public class MinestomBrickChatManager extends BrickChatManager<Player, MinestomP
     protected Component format(Component format, Player player, String msg) {
         Component message;
         if (player.hasPermission("brickchat.parse")) {
-            message = MiniMessage.miniMessage().deserialize(msg); //LegacyComponentSerializer.legacySection().deserialize(msg);
+            message = MiniMessage.miniMessage().deserialize(msg);
         } else {
             message = Component.text(msg);
         }
 
-        Component result = super.format(format, player, message);
-
-        result = result
-                .replaceText(builder -> {
-                    builder.match(Pattern.quote("{playername}"))
-                            .replacement(player.getName());
-                });
-
-        if (MinecraftServer.getExtensionManager().hasExtension("brickplaceholders")) {
-            result = MinestomPlaceholderAPI.get().replace(player, result);
-        }
-
-        return result;
+        return super.format(format, player, message);
     }
 
     protected MinestomPlayerChannelChatEvent dispatch(ChatChannel<Player> channel, Player player, String message) {

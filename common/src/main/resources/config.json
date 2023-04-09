@@ -1,10 +1,10 @@
 {
   "channels": {
     "default": {
-      "format": "<white>{playername}<white>: <gray>{chatmessage}"
+      "format": "<white>%player_name%<white>: <gray>%chatmessage%"
     },
     "admin": {
-      "format": "<red>[ADMINCHAT] <white>{playername}<white>: {chatmessage}",
+      "format": "<red>[ADMINCHAT] <white>%player_name%<white>: %chatmessage%",
       "activator": "!",
       "restricted": true
     }
