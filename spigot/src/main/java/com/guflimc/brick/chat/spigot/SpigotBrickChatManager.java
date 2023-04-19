@@ -1,5 +1,6 @@
 package com.guflimc.brick.chat.spigot;
 
+import com.guflimc.adventure.MixedLegacyComponentSerializer;
 import com.guflimc.brick.chat.api.channel.ChatChannel;
 import com.guflimc.brick.chat.common.BrickChatManager;
 import com.guflimc.brick.chat.spigot.api.SpigotChatManager;
@@ -19,7 +20,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlayerChannelChatEvent> implements SpigotChatManager {
@@ -100,11 +100,7 @@ public class SpigotBrickChatManager extends BrickChatManager<Player, SpigotPlaye
     protected Component format(Component format, Player player, String msg) {
         Component message;
         if (player.hasPermission("brickchat.parse")) {
-            try {
-                message = MiniMessage.miniMessage().deserialize(msg);
-            } catch (Exception ex) {
-                message = LegacyComponentSerializer.legacySection().deserialize(msg);
-            }
+            message = MiniMessage.miniMessage().deserialize(msg);
         } else {
             message = Component.text(msg);
         }

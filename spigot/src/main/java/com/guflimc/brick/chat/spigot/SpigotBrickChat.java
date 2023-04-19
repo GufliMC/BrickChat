@@ -1,13 +1,13 @@
 package com.guflimc.brick.chat.spigot;
 
+import com.guflimc.brick.chat.common.ChatConfig;
 import com.guflimc.brick.chat.spigot.api.SpigotChatAPI;
+import com.guflimc.brick.chat.spigot.api.channel.SpigotChatChannel;
+import com.guflimc.config.toml.TomlConfig;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Arrays;
 
 public class SpigotBrickChat extends JavaPlugin {
 
@@ -22,16 +22,10 @@ public class SpigotBrickChat extends JavaPlugin {
         // register events
         getServer().getPluginManager().registerEvents(new SpigotEventListener(chatManager), this);
 
-        // load channels
-        SpigotConfigParser parser = new SpigotConfigParser(chatManager);
-        saveResource("config.json", false);
-        try (
-                InputStream is = new FileInputStream(new File(getDataFolder(), "config.json"))
-        ) {
-            parser.parse(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // CONFIG
+        ChatConfig config = TomlConfig.load(getDataFolder().toPath().resolve("config.toml"), new ChatConfig());
+        config.channels.forEach(c ->
+                chatManager.registerChatChannel(new SpigotChatChannel(c.name, c.format, c.activator, c.restricted)));
 
         getLogger().info("Enabled " + nameAndVersion() + ".");
     }

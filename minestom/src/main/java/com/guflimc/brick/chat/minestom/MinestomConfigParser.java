@@ -2,7 +2,6 @@ package com.guflimc.brick.chat.minestom;
 
 import com.guflimc.brick.chat.api.ChatManager;
 import com.guflimc.brick.chat.api.channel.AbstractChatChannel;
-import com.guflimc.brick.chat.common.ConfigParser;
 import com.guflimc.brick.chat.minestom.api.channel.MinestomChatChannel;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;

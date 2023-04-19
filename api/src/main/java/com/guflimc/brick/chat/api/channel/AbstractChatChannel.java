@@ -1,6 +1,7 @@
 package com.guflimc.brick.chat.api.channel;
 
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractChatChannel<T> implements ChatChannel<T> {
 
@@ -9,7 +10,7 @@ public abstract class AbstractChatChannel<T> implements ChatChannel<T> {
     protected final Component format;
     protected final boolean restricted;
 
-    public AbstractChatChannel(String name, String activator, Component format, boolean restricted) {
+    public AbstractChatChannel(@NotNull String name, @NotNull Component format, @NotNull String activator, boolean restricted) {
         this.name = name;
         this.activator = activator;
         this.format = format;

@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 
 public class SpigotChatChannel extends AbstractChatChannel<Player> {
 
-    public SpigotChatChannel(String name, String activator, Component format, boolean restricted) {
-        super(name, activator, format, restricted);
+    public SpigotChatChannel(String name, Component format, String activator, boolean restricted) {
+        super(name, format, activator, restricted);
     }
 
     @Override

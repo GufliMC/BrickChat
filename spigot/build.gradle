@@ -7,16 +7,16 @@ repositories {
 }
 
 dependencies {
+    implementation project(':common')
+    implementation project(':spigot-api')
+
     // provided by platform
     compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT'
     compileOnly 'com.guflimc.brick.placeholders:spigot-api:+'
 
     // shadow
     implementation "net.kyori:adventure-platform-bukkit:4.+"
-    implementation project(':spigot-api')
-    implementation (project(':common')) {
-        exclude group: 'com.google.code.gson' // provided by platform
-    }
+    implementation 'com.guflimc.config:toml:+'
 }
 
 bukkit {
